@@ -1,20 +1,5 @@
 # FirmwareVault AI — Exact Firmware Finder
 
-GitHub Pages frontend using the **user's own OpenRouter API key** and the live OpenRouter model catalog to find and strictly verify public firmware candidates.
-
-## What changed from the previous build
-
-- No embedded/shared OpenRouter key.
-- User must enter an `sk-or-...` key before AI search.
-- Live `/api/v1/models` discovery finds models with **zero prompt + zero completion pricing**.
-- `openrouter/free` is used as the primary free router.
-- Automatic rotation tries currently free models if the primary/fallback request fails.
-- Candidate pre-filter rejects obvious non-firmware content.
-- AI receives a strict JSON firmware-verification prompt.
-- Results require `firmware=true` and confidence >= 72.
-- AI is explicitly prohibited from inventing URLs, builds, hashes or model matches.
-- Direct firmware button opens the original public source URL; large files are not proxied.
-
 ## OpenRouter key setup
 
 1. Create your own OpenRouter API key at:
@@ -94,52 +79,11 @@ Recommended production controls:
 - SHA-256 verification
 - approved/pending states
 
-## No paid-file bypass
-
-This tool is designed for firmware that is publicly accessible and lawfully shareable. It does not bypass logins, payment, DRM, CAPTCHA or private access controls.
-
-## Files
-
-```text
-FirmwareVault_AI/
-├── index.html
-├── styles.css
-├── app.js
-└── README.md
-```
-
-No PNG. No assets folder. No build system. No package manager. No embedded API key.
-
-## GitHub Pages
-
-Upload these four files to the repository root and enable GitHub Pages. No build step is required.
 
 ## Branding
 
 ╰─➤ ⚡ **𝐁𝐔𝐈𝐋𝐓 𝐁𝐘 𝐅𝐀𝐈𝐙𝐀𝐍™**
 
-
-## Fixed OpenRouter fallback error
-
-This build fixes:
-
-```text
-'models' array must have 3 items or fewer
-```
-
-Every individual request now contains at most:
-
-```text
-1 primary model + 2 fallback models = 3 models
-```
-
-Automatic rotation still works by using separate bounded rounds:
-
-```text
-Round 1: A → B → C
-Round 2: D → E → F
-Round 3: G → H → I
-```
 
 So the website can rotate through a larger live free-model pool without ever sending more than three models in a single OpenRouter request.
 
